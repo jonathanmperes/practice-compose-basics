@@ -11,9 +11,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,26 +40,40 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ShowContentWithImage() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        horizontalAlignment = CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        val image = painterResource(id = R.drawable.ic_task_completed)
+    ContentWithImage(
+        image = painterResource(id = R.drawable.bg_compose_background),
+        title = stringResource(id = R.string.jetpack_title),
+        description = stringResource(id = R.string.jetpack_description),
+        text = stringResource(id = R.string.jetpack_text)
+    )
+}
+
+@Composable
+fun ContentWithImage(
+    title: String,
+    description: String,
+    text: String,
+    image: Painter,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
         Image(painter = image, contentDescription = null)
         Text(
-            text = stringResource(id = R.string.task_completed),
-            fontWeight = Bold,
-            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
+            text = title,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(16.dp)
         )
         Text(
-            text = stringResource(id = R.string.nice_work),
-            fontSize = 16.sp
+            text = description,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+        )
+        Text(
+            text = text,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.padding(16.dp)
         )
     }
-
 }
 
 @Preview(showBackground = true)
