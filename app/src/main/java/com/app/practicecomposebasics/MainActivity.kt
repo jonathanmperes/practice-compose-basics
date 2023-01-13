@@ -1,16 +1,24 @@
 package com.app.practicecomposebasics
 
 import android.os.Bundle
+import android.text.style.BackgroundColorSpan
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Cyan
+import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.LightGray
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ShowContentWithImage()
+                    ShowContentWithCardAndColor()
                 }
             }
         }
@@ -39,47 +47,71 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ShowContentWithImage() {
-    ContentWithImage(
-        image = painterResource(id = R.drawable.bg_compose_background),
-        title = stringResource(id = R.string.jetpack_title),
-        description = stringResource(id = R.string.jetpack_description),
-        text = stringResource(id = R.string.jetpack_text)
-    )
+fun ShowContentWithCardAndColor() {
+    Column(Modifier.fillMaxWidth()) {
+        Row(Modifier.weight(1f)) {
+            ComposableCard(
+                title = stringResource(R.string.first_title),
+                description = stringResource(R.string.first_description),
+                backgroundColor = Green,
+                modifier = Modifier.weight(1f)
+            )
+            ComposableCard(
+                title = stringResource(R.string.second_title),
+                description = stringResource(R.string.second_description),
+                backgroundColor = Yellow,
+                modifier = Modifier.weight(1f)
+            )
+        }
+        Row(Modifier.weight(1f)) {
+            ComposableCard(
+                title = stringResource(R.string.third_title),
+                description = stringResource(R.string.third_description),
+                backgroundColor = Cyan,
+                modifier = Modifier.weight(1f)
+            )
+            ComposableCard(
+                title = stringResource(R.string.forth_title),
+                description = stringResource(R.string.forth_description),
+                backgroundColor = LightGray,
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
 }
 
 @Composable
-fun ContentWithImage(
+fun ComposableCard(
     title: String,
     description: String,
-    text: String,
-    image: Painter,
+    backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
-        Image(painter = image, contentDescription = null)
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+            .padding(16.dp),
+        horizontalAlignment = CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         Text(
             text = title,
-            fontSize = 24.sp,
-            modifier = Modifier.padding(16.dp)
+            fontWeight = Bold,
+            modifier = modifier.padding(bottom = 16.dp)
         )
         Text(
             text = description,
-            textAlign = TextAlign.Justify,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
-        )
-        Text(
-            text = text,
-            textAlign = TextAlign.Justify,
-            modifier = Modifier.padding(16.dp)
+            textAlign = TextAlign.Justify
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun ShowImagePreview() {
     PracticeComposeBasicsTheme {
-        ShowContentWithImage()
+        ShowContentWithCardAndColor()
     }
 }
